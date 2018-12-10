@@ -3,7 +3,7 @@
 	"author": [
 		"Le Duy Quang"
 	],
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"url": "https://www.mediawiki.org/wiki/Extension:ImageCompare",
 	"descriptionmsg": "imageCompare-desc",
 	"license-name": "MIT",
