@@ -7,10 +7,27 @@ class ImageCompare {
 		$parser->setHook('imgcomp', 'ImageCompare::parseTag');
 	}
 	
+	# Whether the client is using mobile interface. Used to determine the width of images.
+	public static function isOnMobile() {
+		if (
+			class_exists("MobileContext") # MobileFrontend is installed.
+			&& MobileContext::singleton()->isMobileDevice() # Device is viewing the mobile version.
+		) return true;
+		else return false;
+	}
+	
+	/* Mobile friendly <imgcomp> parser.
+	   Parameters:
+	   - img1; img2: Title of two images, to the left and to the right, without "File:".
+	   - width: Width in pixels for images, for desktop. Defaults to their original width.
+	   - mobilewidth: Width in pixels for images in mobile version. Defaults to 320px or width of it is lower.
+	*/
 	public static function parseTag($input, array $args, Parser $parser, PPFrame $frame) {
 		try {
-			$parser->getOutput()->addModules( 'ext.imageCompare' );
-			$parser->getOutput()->addModuleStyles( 'ext.imageCompare.styles' );
+			$mobile = ImageCompare::isOnMobile();
+			$mobilewidth = 320;
+			$parser->getOutput()->addModules( 'ext.imageCompare'.($mobile ? '.mobile' : '') );
+			$parser->getOutput()->addModuleStyles( 'ext.imageCompare.styles'.($mobile ? '.mobile' : '') );
 			if (!isset($args['img1'], $args['img2'])) {
 				throw new ImageCompareException("error-noimg");
 			}
@@ -20,6 +37,12 @@ class ImageCompare {
 				if (is_numeric($args['width']))
 					$width = round($args['width']);
 				else throw new ImageCompareException("error-numberinvalid");
+			if (isset($args['mobilewidth']))
+				if (is_numeric($args['mobilewidth']))
+					$mobilewidth = round($args['mobilewidth']);
+				else throw new ImageCompareException("error-numberinvalid");
+			else if ($width < 320) $mobilewidth = $width;
+			if ($mobile) $width = $mobilewidth;
 			$return = ImageCompare::makeImage($parser, Title::newFromDBKey(str_replace(' ', '_', 'File:'.$args['img2'].'')), 'img-comp-img', $divheight, $width)
 			.ImageCompare::makeImage($parser, Title::newFromDBKey(str_replace(' ', '_', 'File:'.$args['img1'].'')), 'img-comp-img img-comp-overlay', $divheight, $width)
 			.'</div>';
