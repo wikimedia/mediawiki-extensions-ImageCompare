@@ -12,8 +12,8 @@
 		"MediaWiki": ">= 1.29.0"
 	},
 	"MessagesDirs": {
-		"CountDownClock": [
-			"internationalization"
+		"ImageCompare": [
+			"i18n"
 		]
 	},
 	"AutoloadClasses": {
