@@ -21,9 +21,7 @@
 		"ImageCompareException": "ImageCompare_exception.php"
 	},
 	"Hooks": {
-		"ParserFirstCallInit": [
-			"ImageCompare::onParserInit"
-		]
+		"ParserFirstCallInit": "ImageCompare::onParserInit"
 	},
 	"ResourceModules": {
 		"ext.imageCompare": {
