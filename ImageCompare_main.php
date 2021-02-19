@@ -55,7 +55,7 @@ class ImageCompare {
 	# Modified code from Parser.
 	public static function makeImage($parser, $title, $classes, &$divheight, $width) {
 		# Fetch and register the file (file title may be different via hooks)
-		list( $file, $title ) = $parser->fetchFileAndTitle( $title, "" );
+		list( $file, $title ) = $parser->fetchFileAndTitle( $title, array() );
 
 		$imgheight = 0;
 		
