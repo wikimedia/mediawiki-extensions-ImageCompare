@@ -26,8 +26,8 @@ class ImageCompare {
 		try {
 			$mobile = ImageCompare::isOnMobile();
 			$mobilewidth = 320;
-			$parser->getOutput()->addModules( 'ext.imageCompare'.($mobile ? '.mobile' : '') );
-			$parser->getOutput()->addModuleStyles( 'ext.imageCompare.styles'.($mobile ? '.mobile' : '') );
+			$parser->getOutput()->addModules( [ 'ext.imageCompare'.($mobile ? '.mobile' : '') ] );
+			$parser->getOutput()->addModuleStyles( [ 'ext.imageCompare.styles'.($mobile ? '.mobile' : '') ] );
 			if (!isset($args['img1'], $args['img2'])) {
 				throw new ImageCompareException("error-noimg");
 			}
