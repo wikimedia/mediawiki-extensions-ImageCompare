@@ -1,5 +1,7 @@
 <?php
 
+use MediaWiki\MediaWikiServices;
+
 class ImageCompare {
 	public static function onExtensionLoad() {}
 	
@@ -72,7 +74,7 @@ class ImageCompare {
 	public static function makeImageLink(Parser $parser, Title $title, $file, $classes, &$imgheight, $width) {
 		$res = null;
 		$dummy = new DummyLinker;
-		if ( !Hooks::run( 'ImageBeforeProduceHTML', [ &$dummy, &$title,
+		if ( !MediaWikiServices::getInstance()->getHookContainer()->run( 'ImageBeforeProduceHTML', [ &$dummy, &$title,
 			&$file, &$frameParams, &$handlerParams, &$time, &$res ] ) ) {
 			return $res;
 		}
